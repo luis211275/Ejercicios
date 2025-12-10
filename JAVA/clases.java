@@ -195,89 +195,123 @@ class CuentaBancaria {
 // prestarLibro(titulo), devolverLibro(titulo).
 // Deja huecos para que lo desarrollen.
 //
-
-
-class Libro {
-
-    // atributos COMPLETAR
-    private Srting titulo;
+public class Libro {
+    // Atributos
+    private String titulo;
     private String autor;
-    private ArrayList<Libro> libros;
-    
-    
-    // constructor COMPLETAR
-   
-   public Libro (String titulo, Srting autor){
-    this.titulo = titulo;
-    this.autor = autor;
-    libros = new ArrayList<>();
-   }
-   //Metodo añadir libro
+    private boolean disponible; // Nuevo atributo necesario para saber si se puede prestar
 
-    public void AñadirLibro(Libro libro){
-        libro.add(libros);
+    // Constructor
+    public Libro(String titulo, String autor) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.disponible = true; // Por defecto, al crear un libro, está disponible
     }
 
-    //Getters and setters
-
-     public void getitulo(){
+    // Getters y Setters
+    public String getTitulo() {
         return titulo;
     }
 
-    public void settitulo(String titulo){
-        this.titulo;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
-    public void getautor(){
-        return autor
+    public String getAutor() {
+        return autor;
     }
 
-    public void setautor(String autor){
-        this.autor
+    public void setAutor(String autor) {
+        this.autor = autor;
     }
 
-
-    //Metodo prestar libro
-
-    public void prestarLibro(String titulo){
-        Scanner sc = new Scanner (System.in);
-        System.out.println("Introduce el titulo del libro que quieres comprar")
-        String titulos = sc.nextLine();
-            if (libro.gettitulo().equals(titulos)) {
-                System.out.println(libro);
-            }else{
-                System.out.println("Lo siento, no tenemos ese libro")
-            }
+    public boolean isDisponible() {
+        return disponible;
     }
 
-    //Metodo prestar libro
-
-    public void devolverLibro(String titulo){
-
-        Scanner sc = new Scanner (System.in);
-        System.out.println("Introduce el titulo del libro que vas a devolver:")
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
     }
 
-
-    // método mostrarInfo COMPLETAR
-    
+    // Método mostrarInfo
+    public void mostrarInfo() {
+        String estado = disponible ? "Disponible" : "Prestado";
+        System.out.println("Libro: " + titulo + " | Autor: " + autor + " | Estado: " + estado);
+    }
 }
 
 
+import java.util.ArrayList;
 
-class Biblioteca {
+public class Biblioteca {
 
-    // lista de libros COMPLETAR
+    // Lista de libros
+    private ArrayList<Libro> listaLibros;
+
+    // Constructor: Inicializamos la lista vacía
+    public Biblioteca() {
+        this.listaLibros = new ArrayList<>();
+    }
+
+    // Método añadirLibro
+    public void anadirLibro(Libro libro) {
+        listaLibros.add(libro);
+        System.out.println("Libro añadido: " + libro.getTitulo());
+    }
+
+    // Método prestarLibro: Recibe el título, busca el libro y cambia su estado
+    public void prestarLibro(String titulo) {
+        boolean encontrado = false;
+
+        for (Libro libro : listaLibros) {
+            // Buscamos por título (ignorando mayúsculas/minúsculas)
+            if (libro.getTitulo().equalsIgnoreCase(titulo)) {
+                encontrado = true;
+                if (libro.isDisponible()) {
+                    libro.setDisponible(false); // Cambiamos estado a NO disponible
+                    System.out.println("El libro '" + titulo + "' ha sido prestado con éxito.");
+                } else {
+                    System.out.println("Lo siento, el libro '" + titulo + "' ya está prestado.");
+                }
+                break; // Salimos del bucle si ya encontramos el libro
+            }
+        }
+
+        if (!encontrado) {
+            System.out.println("El libro '" + titulo + "' no existe en la biblioteca.");
+        }
+    }
+
+    // Método devolverLibro: Busca y cambia el estado a disponible
+    public void devolverLibro(String titulo) {
+        boolean encontrado = false;
+
+        for (Libro libro : listaLibros) {
+            if (libro.getTitulo().equalsIgnoreCase(titulo)) {
+                encontrado = true;
+                if (!libro.isDisponible()) {
+                    libro.setDisponible(true); // Vuelve a estar disponible
+                    System.out.println("Has devuelto el libro '" + titulo + "'. Gracias.");
+                } else {
+                    System.out.println("Este libro ya estaba en la biblioteca, no se puede devolver.");
+                }
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            System.out.println("No puedes devolver un libro que no pertenece a esta biblioteca.");
+        }
+    }
     
-
-    // añadirLibro COMPLETAR
-    
-
-    // prestarLibro COMPLETAR
-    
-
-    // devolverLibro COMPLETAR
-    
+    // Método extra para ver todo el inventario
+    public void mostrarLibros() {
+        System.out.println("\n--- Inventario de la Biblioteca ---");
+        for (Libro libro : listaLibros) {
+            libro.mostrarInfo();
+        }
+        System.out.println("-----------------------------------\n");
+    }
 }
 
 
@@ -287,33 +321,74 @@ class Biblioteca {
 // Carrito: lista de productos, añadirProducto(), calcularTotal().
 //
 
+public class Producto {
 
-class Producto {
+    // Atributos
+    private String nombre;
+    private double precio; // Usamos double para permitir decimales
 
-    // atributos COMPLETAR
-    pri
-   
+    // Constructor
+    public Producto(String nombre, double precio) {
+        this.nombre = nombre;
+        this.precio = precio;
+    }
 
-    // constructor COMPLETAR
+    // Getters
+    // Es CRUCIAL tener getPrecio() para que el carrito pueda sumar
+    public double getPrecio() {
+        return precio;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
     
-
-    // getters opcionales COMPLETAR
-    
+    // Opcional: Para imprimir bonito
+    public String toString() {
+        return nombre + " (" + precio + "€)";
+    }
 }
 
+import java.util.ArrayList;
 
+public class Carrito {
 
-class Carrito {
+    // Lista de productos
+    private ArrayList<Producto> compras;
 
-    // lista de productos COMPLETAR
+    // Constructor
+    public Carrito() {
+        this.compras = new ArrayList<>(); // Iniciamos la lista vacía
+    }
+
+    // Método añadirProducto
+    public void anadirProducto(Producto p) {
+        compras.add(p);
+        System.out.println("Añadido al carrito: " + p.getNombre());
+    }
+
+    // Método calcularTotal
+    public double calcularTotal() {
+        double total = 0; // 1. Creamos una variable acumulador iniciada en 0
+        
+        // 2. Recorremos la lista producto por producto
+        for (Producto p : compras) {
+            // 3. Sumamos el precio del producto actual al total
+            total = total + p.getPrecio(); 
+            // También se puede escribir: total += p.getPrecio();
+        }
+        
+        // 4. Devolvemos el resultado final
+        return total;
+    }
     
-
-    // añadirProducto COMPLETAR
-    
-
-    // calcularTotal COMPLETAR
-    
-
+    // Método extra para ver qué llevamos
+    public void mostrarDetalle() {
+        System.out.println("\n--- Ticket de Compra ---");
+        for(Producto p : compras){
+            System.out.println("- " + p.toString());
+        }
+    }
 }
 
 
@@ -361,6 +436,32 @@ public class Main {
         //   - Prestar un libro por título.
         //   - Devolver un libro.
         //   - Mostrar si realmente cambia su disponibilidad.
+            // 1. Crear la biblioteca
+            Biblioteca miBiblioteca = new Biblioteca();
+
+            // 2. Crear libros
+            Libro l1 = new Libro("El Quijote", "Cervantes");
+            Libro l2 = new Libro("1984", "George Orwell");
+            Libro l3 = new Libro("El Principito", "Saint-Exupery");
+
+            // 3. Añadir libros a la biblioteca
+            miBiblioteca.anadirLibro(l1);
+            miBiblioteca.anadirLibro(l2);
+            miBiblioteca.anadirLibro(l3);
+
+            // 4. Mostrar estado inicial
+            miBiblioteca.mostrarLibros();
+
+            // 5. Probar prestar libro
+            miBiblioteca.prestarLibro("1984"); // Éxito
+            miBiblioteca.prestarLibro("1984"); // Fallo (ya está prestado)
+            miBiblioteca.prestarLibro("Harry Potter"); // Fallo (no existe)
+
+            // 6. Probar devolver libro
+            miBiblioteca.devolverLibro("1984"); // Éxito
+
+            // 7. Mostrar estado final
+            miBiblioteca.mostrarLibros();
   
         // EJERCICIO 5: Producto y Carrito
         // Enunciado:
@@ -368,6 +469,33 @@ public class Main {
         //   - Añadirlos al carrito.
         //   - Calcular el total del carrito.
 
+                public class Main {
+            public static void main(String[] args) {
+                // 1. Crear productos
+                Producto p1 = new Producto("Leche", 1.20);
+                Producto p2 = new Producto("Pan", 0.80);
+                Producto p3 = new Producto("Café", 4.50);
+
+                // 2. Crear el carrito
+                Carrito miCarrito = new Carrito();
+
+                // 3. Llenar el carrito
+                miCarrito.anadirProducto(p1);
+                miCarrito.anadirProducto(p2);
+                miCarrito.anadirProducto(p3);
+                
+                // Añadimos otro pan (puedes repetir objetos)
+                miCarrito.anadirProducto(p2); 
+
+                // 4. Mostrar detalle
+                miCarrito.mostrarDetalle();
+
+                // 5. Calcular y mostrar el total
+                double totalPagar = miCarrito.calcularTotal();
+                System.out.println("------------------------");
+                System.out.println("TOTAL A PAGAR: " + totalPagar + "€");
+    }
+}
     }
 }
 
