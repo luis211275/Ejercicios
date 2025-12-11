@@ -19,28 +19,28 @@ class Coche {
 
     //Getters and setters
 
-    public void getmarca(){
+    public String getmarca(){
         return marca;
     }
 
     public void setmarca(String marca){
-        this.marca;
+        this.marca = marca;
     }
 
-    public void getmodelo(){
+    public String getmodelo(){
         return marca;
     }
 
     public void setmodelo(String modelo){
-        this.marca;
+        this.marca = marca;
     }
 
-    public void getvelodidad(){
-        return marca;
+    public int getvelodidad(){
+        return velocidad;
     }
 
     public void setvelodidad(int velocidad){
-        this.marca;
+        this.velocidad = velocidad;
     }
 
     
@@ -48,8 +48,8 @@ class Coche {
     // Método acelerar (suma +10) COMPLETAR
 
     public static void acelerar (){
-        setvelodidad(getvelodidad+10);
-        System.out.println ("El coche acelera y sube a: " + getvelodidad + "km/h");
+        setvelodidad(getvelodidad()+10);
+        System.out.println ("El coche acelera y sube a: " + getvelodidad() + "km/h");
 
     }
    
@@ -57,8 +57,8 @@ class Coche {
     // Método frenar (resta -10 y nunca menor que 0) COMPLETAR
 
     public static void frenar (){
-
-        System.out.println ("El coche frena y baja a: " + (getvelodidad - 10) + "km/h")
+        setvelodidad(getvelodidad() + 10);
+        System.out.println ("El coche frena y baja a: " + getvelodidad() + "km/h");
 
     }
    
@@ -67,12 +67,40 @@ class Coche {
 
     public static void MostrarInformacion(){
 
-        return("Marca: " + getmarca + "\nModelo: " + getmodelo + "\nVelocidad: " + getvelodidad)
+        return("Marca: " + getmarca() + "\nModelo: " + getmodelo() + "\nVelocidad: " + getvelodidad())
 
     }
     
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -96,12 +124,12 @@ class Alumno {
     }
 
    //Getters y setters
-   public void getnombre(){
+   public String getnombre(){
         return nombre;
     }
 
     public void setnombre(String nombre){
-        this.nombre;
+        this.nombre = nombre;
     }
 
     // Método añadirNota COMPLETAR
@@ -124,11 +152,37 @@ class Alumno {
 
     // Método mostrarInfo COMPLETAR
 
-    public static vois MostrarInformacion (){
-        return ("Nombre: " + getnombre + "Notas: " + AñadirNota + "Media: " + CalcularMedia);
+    public static void MostrarInformacion (){
+        return ("Nombre: " + getnombre() + "Notas: " + AñadirNota() + "Media: " + CalcularMedia());
     }
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -155,13 +209,25 @@ class CuentaBancaria {
     }
 
 
+    public int getSaldo(){
+        return this.saldo;
+
+    }
+
+    public void setSaldo(int saldo){
+        this.saldo = saldo;
+    }
+
+
+
 
     // método ingresar COMPLETAR
 
     public void ingresar(double cantidad){
         if(cantidad > 0){
-            this.saldo += cantidad;
-            System.out.println("Has ingresado: " + cantidad + "$");
+            
+            setSaldo(getSaldo() + cantidad);
+            System.out.println("Has ingresado: " + getSaldo() + "$");
         }else{
             System.out.println("Cantidad no valida");
         }
@@ -174,7 +240,7 @@ class CuentaBancaria {
     if(cantidad <=0){
         System.out.println("Cantidad no valida");
     }else if (cantidad > saldo){
-        System.out.println("No tienes tanto dinero");
+        System.out.println("No tienes el dinero suficiente");
     }else{
         saldo -= cantidad;
         System.out.println("Has retirado " + cantidad + "$");
@@ -186,6 +252,28 @@ class CuentaBancaria {
         System.out.println("Saldo actual: " + saldo);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -225,7 +313,7 @@ public class Libro {
         this.autor = autor;
     }
 
-    public boolean isDisponible() {
+    public boolean getDisponible() {
         return disponible;
     }
 
@@ -233,12 +321,12 @@ public class Libro {
         this.disponible = disponible;
     }
 
-    // Método mostrarInfo
-    public void mostrarInfo() {
-        String estado = disponible ? "Disponible" : "Prestado";
-        System.out.println("Libro: " + titulo + " | Autor: " + autor + " | Estado: " + estado);
+    public void  MostrarInfo(){
+        System.out.println("Titulo: " + getTitulo() + " || Autor: " + getAutor);
     }
 }
+
+
 
 
 import java.util.ArrayList;
@@ -256,7 +344,7 @@ public class Biblioteca {
     // Método añadirLibro
     public void anadirLibro(Libro libro) {
         listaLibros.add(libro);
-        System.out.println("Libro añadido: " + libro.getTitulo());
+        System.out.println("Se ha añadido el libro: " + libro.getTitulo());
     }
 
     // Método prestarLibro: Recibe el título, busca el libro y cambia su estado
@@ -264,21 +352,20 @@ public class Biblioteca {
         boolean encontrado = false;
 
         for (Libro libro : listaLibros) {
-            // Buscamos por título (ignorando mayúsculas/minúsculas)
             if (libro.getTitulo().equalsIgnoreCase(titulo)) {
                 encontrado = true;
-                if (libro.isDisponible()) {
-                    libro.setDisponible(false); // Cambiamos estado a NO disponible
-                    System.out.println("El libro '" + titulo + "' ha sido prestado con éxito.");
+                if (libro.getDisponible()) {
+                    libro.setDisponible(false); 
+                    System.out.println("Ya tienes a tu disposicion el libro: " + titulo);
                 } else {
-                    System.out.println("Lo siento, el libro '" + titulo + "' ya está prestado.");
+                    System.out.println("Lo siento, el libro: " + titulo + ", ya está prestado.");
                 }
-                break; // Salimos del bucle si ya encontramos el libro
+                break;
             }
         }
 
         if (!encontrado) {
-            System.out.println("El libro '" + titulo + "' no existe en la biblioteca.");
+            System.out.println("El libro: " + titulo + ", no existe en la biblioteca.");
         }
     }
 
@@ -304,15 +391,36 @@ public class Biblioteca {
         }
     }
     
-    // Método extra para ver todo el inventario
+    // Mostrar informacion
     public void mostrarLibros() {
-        System.out.println("\n--- Inventario de la Biblioteca ---");
+        System.out.println("--- Todos los libros de la biblioteca ---");
         for (Libro libro : listaLibros) {
             libro.mostrarInfo();
         }
-        System.out.println("-----------------------------------\n");
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -325,7 +433,7 @@ public class Producto {
 
     // Atributos
     private String nombre;
-    private double precio; // Usamos double para permitir decimales
+    private double precio;
 
     // Constructor
     public Producto(String nombre, double precio) {
@@ -333,32 +441,41 @@ public class Producto {
         this.precio = precio;
     }
 
-    // Getters
-    // Es CRUCIAL tener getPrecio() para que el carrito pueda sumar
+    // Getters and setters
     public double getPrecio() {
         return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
     public String getNombre() {
         return nombre;
     }
+
+    public void setNombre(String nombre){
+        this.nombre = nombre;
+    }
     
-    // Opcional: Para imprimir bonito
+    // metodo to string
     public String toString() {
-        return nombre + " (" + precio + "€)";
+        return nombre + "-->" + precio + "$";
     }
 }
+
+
+
 
 import java.util.ArrayList;
 
 public class Carrito {
 
-    // Lista de productos
     private ArrayList<Producto> compras;
 
     // Constructor
     public Carrito() {
-        this.compras = new ArrayList<>(); // Iniciamos la lista vacía
+        this.compras = new ArrayList<>();
     }
 
     // Método añadirProducto
@@ -369,27 +486,67 @@ public class Carrito {
 
     // Método calcularTotal
     public double calcularTotal() {
-        double total = 0; // 1. Creamos una variable acumulador iniciada en 0
+        double total = 0; 
         
-        // 2. Recorremos la lista producto por producto
+        
         for (Producto p : compras) {
-            // 3. Sumamos el precio del producto actual al total
-            total = total + p.getPrecio(); 
-            // También se puede escribir: total += p.getPrecio();
+            total+=p.getPrecio();
         }
         
-        // 4. Devolvemos el resultado final
         return total;
     }
     
-    // Método extra para ver qué llevamos
     public void mostrarDetalle() {
-        System.out.println("\n--- Ticket de Compra ---");
+        System.out.println("--- Ticket de Compra ---");
         for(Producto p : compras){
-            System.out.println("- " + p.toString());
+            System.out.println( + p.toString());
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -407,6 +564,17 @@ public class Main {
         //   - Llamar varias veces a acelerar() y frenar().
         //   - Mostrar los datos finales del coche.
 
+        Coche coche = new coche ("toyota", "corolla", 100);
+        coche.acelerar();
+        coche.frenar();
+        coche.MostrarInformacion();
+
+
+
+
+
+
+
 
         // EJERCICIO 2: Alumno y notas
         // Enunciado:
@@ -414,6 +582,20 @@ public class Main {
         //   - Añadir varias notas con añadirNota().
         //   - Mostrar la información completa.
         //   - Calcular y mostrar la media.
+
+        Alumno alumno = new Alumno("Luis");
+        alumno.AñadirNota(5, 7, 8, 5);
+        alumno.CalcularMedia();
+        alumno.MostrarInformacion()
+
+
+
+
+
+
+
+
+
 
         // EJERCICIO 3: Cuenta Bancaria
         // Enunciado:
@@ -429,6 +611,15 @@ public class Main {
         cuenta.retirar(100000000);
         cuenta.MostrarSaldo();
 
+
+
+
+
+
+
+
+
+
         // EJERCICIO 4: Biblioteca y Libros
         // Enunciado:
         //   - Crear varios libros.
@@ -439,63 +630,77 @@ public class Main {
             // 1. Crear la biblioteca
             Biblioteca miBiblioteca = new Biblioteca();
 
-            // 2. Crear libros
-            Libro l1 = new Libro("El Quijote", "Cervantes");
-            Libro l2 = new Libro("1984", "George Orwell");
-            Libro l3 = new Libro("El Principito", "Saint-Exupery");
+            // Añadir libros
+            Libro libro1 = new Libro("El Quijote", "Cervantes");
+            Libro libro2 = new Libro("Harry potter", "JK.Rowling");
+            Libro libro3 = new Libro("El Principito", "Saint-Exupery");
 
-            // 3. Añadir libros a la biblioteca
-            miBiblioteca.anadirLibro(l1);
-            miBiblioteca.anadirLibro(l2);
-            miBiblioteca.anadirLibro(l3);
+            // Metodo añadir libro
+            miBiblioteca.anadirLibro(libro1);
+            miBiblioteca.anadirLibro(libro2);
+            miBiblioteca.anadirLibro(libro3);
 
-            // 4. Mostrar estado inicial
+            // Estado inicial
             miBiblioteca.mostrarLibros();
 
-            // 5. Probar prestar libro
-            miBiblioteca.prestarLibro("1984"); // Éxito
-            miBiblioteca.prestarLibro("1984"); // Fallo (ya está prestado)
-            miBiblioteca.prestarLibro("Harry Potter"); // Fallo (no existe)
+            // metodo prestar libro
+            miBiblioteca.prestarLibro("El Principito"); 
+            miBiblioteca.prestarLibro("El Principito");
+            miBiblioteca.prestarLibro("biblia");
 
-            // 6. Probar devolver libro
-            miBiblioteca.devolverLibro("1984"); // Éxito
+            // metodo devolver libro
+            miBiblioteca.devolverLibro("El Principito"); // Éxito
 
-            // 7. Mostrar estado final
+            // Estado final
             miBiblioteca.mostrarLibros();
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // EJERCICIO 5: Producto y Carrito
         // Enunciado:
         //   - Crear 3 productos con nombre y precio.
         //   - Añadirlos al carrito.
         //   - Calcular el total del carrito.
 
-                public class Main {
-            public static void main(String[] args) {
-                // 1. Crear productos
-                Producto p1 = new Producto("Leche", 1.20);
-                Producto p2 = new Producto("Pan", 0.80);
-                Producto p3 = new Producto("Café", 4.50);
+                //Crear productos
+                Producto producto1 = new Producto("Leche", 1.20);
+                Producto producto2 = new Producto("Pan", 0.60);
+                Producto producto3 = new Producto("Café", 2);
 
-                // 2. Crear el carrito
-                Carrito miCarrito = new Carrito();
+                //Crear el carrito
+                Carrito Carrito = new Carrito();
 
-                // 3. Llenar el carrito
-                miCarrito.anadirProducto(p1);
-                miCarrito.anadirProducto(p2);
-                miCarrito.anadirProducto(p3);
+                //Llenar el carrito
+                Carrito.anadirProducto(producto1);
+                Carrito.anadirProducto(producto2);
+                Carrito.anadirProducto(producto3);
                 
                 // Añadimos otro pan (puedes repetir objetos)
-                miCarrito.anadirProducto(p2); 
+                Carrito.anadirProducto(producto2); 
 
-                // 4. Mostrar detalle
-                miCarrito.mostrarDetalle();
+                //Mostrar detalle
+                Carrito.mostrarDetalle();
 
-                // 5. Calcular y mostrar el total
+                //Calcular y mostrar el total
                 double totalPagar = miCarrito.calcularTotal();
                 System.out.println("------------------------");
                 System.out.println("TOTAL A PAGAR: " + totalPagar + "€");
     }
 }
-    }
-}
+    
 
